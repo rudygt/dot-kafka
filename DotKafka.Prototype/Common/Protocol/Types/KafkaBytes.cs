@@ -21,7 +21,8 @@ namespace DotKafka.Prototype.Common.Protocol.Types
 
         public int SizeOf(object item)
         {
-            return 2 + Encoding.UTF8.GetByteCount((string)item);
+            MemoryStream buffer = (MemoryStream)item;
+            return 4 + (int)(buffer.Length - buffer.Position);
         }
 
         public override string ToString()
@@ -45,7 +46,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
 
             var writer = new BinaryWriter(buffer);
             writer.Write((Int32)stream.Length);
-            writer.Write(stream.GetBuffer());
+            stream.CopyTo(buffer);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace DotKafka.Prototype.Common.Protocol.Types
 {
@@ -27,37 +28,108 @@ namespace DotKafka.Prototype.Common.Protocol.Types
 
         public object Read(MemoryStream buffer)
         {
-            throw new NotImplementedException();
+            object[] objects = new object[_fields.Length];
+            for (int i = 0; i < _fields.Length; i++)
+            {
+                try
+                {
+                    objects[i] = _fields[i].Type.Read(buffer);
+                }
+                catch (Exception e)
+                {
+                    throw new SchemaException("Error reading field '" + _fields[i].Name + "'", e);
+                }
+            }
+            return new Struct(this, objects);
         }
 
         public int SizeOf(object item)
         {
-            throw new NotImplementedException();
+            int size = 0;
+            Struct r = (Struct)item;
+            for (int i = 0; i < _fields.Length; i++)
+                size += _fields[i].Type.SizeOf(r.Get(_fields[i]));
+            return size;
         }
 
         public object Validate(object item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Struct s = (Struct)item;
+                for (int i = 0; i < this._fields.Length; i++)
+                {
+                    Field field = this._fields[i];
+                    try
+                    {
+                        field.Type.Validate(s.Get(field));
+                    }
+                    catch (SchemaException e)
+                    {
+                        throw new SchemaException("Invalid value for field '" + field.Name + "'", e);
+                    }
+                }
+                return s;
+            }
+            catch (Exception e)
+            {
+                throw new SchemaException("Not a Struct.", e);
+            }
         }
 
         public void Write(MemoryStream buffer, object item)
         {
-            throw new NotImplementedException();
+            Struct r = (Struct)item;
+            for (int i = 0; i < _fields.Length; i++)
+            {
+                Field f = _fields[i];
+                try
+                {
+                    object value = f.Type.Validate(r.Get(f));
+                    f.Type.Write(buffer, value);
+                }
+                catch (Exception e)
+                {
+                    throw new SchemaException("Error writing field '" + f.Name + "'", e);
+                }
+            }
         }
 
         public int NumFields()
         {
-            throw new NotImplementedException();
+            return this._fields.Length;
         }
 
-        public Field Get(string name)
+        public Field Get(String name)
         {
-            throw new NotImplementedException();
+            return this._fieldsByName[name];
         }
 
-        public Field Get(int name)
+        public Field Get(int slot)
         {
-            throw new NotImplementedException();
+            return this._fields[slot];
         }
+
+        public Field[] Fields()
+        {
+            return this._fields;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder b = new StringBuilder();
+            b.Append('{');
+            for (int i = 0; i < this._fields.Length; i++)
+            {
+                b.Append(this._fields[i].Name);
+                b.Append(':');
+                b.Append(this._fields[i].Type);
+                if (i < this._fields.Length - 1)
+                    b.Append(',');
+            }
+            b.Append("}");
+            return b.ToString();
+        }
+
     }
 }

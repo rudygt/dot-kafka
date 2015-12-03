@@ -19,7 +19,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
     {
         private object[] values;
 
-        private Struct(Schema schema, object[] values)
+        public Struct(Schema schema, object[] values)
         {
             Schema = schema;
             this.values = values;

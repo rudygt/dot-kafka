@@ -7,7 +7,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
         public object Read(MemoryStream buffer)
         {
             var reader = new BinaryReader(buffer);
-            return reader.ReadByte();
+            return reader.ReadSByte();
         }
 
         public int SizeOf(object item)
@@ -22,18 +22,18 @@ namespace DotKafka.Prototype.Common.Protocol.Types
 
         public object Validate(object item)
         {
-            if (!(item is byte))
+            if (!(item is sbyte))
             {
                 throw new SchemaException(item + " is not a Byte");
             }
 
-            return (byte)item;
+            return (sbyte)item;
         }
 
         public void Write(MemoryStream buffer, object item)
         {
             var writer = new BinaryWriter(buffer);
-            writer.Write((byte)item);
+            writer.Write((sbyte)item);
         }
     }
 }
