@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotKafka", "DotKafka\DotKaf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotKafka.Prototype", "DotKafka.Prototype\DotKafka.Prototype.csproj", "{3DC942A3-3DD1-48B4-A28E-1BC20AD9FEFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotKafka.Tests", "DotKafka.Tests\DotKafka.Tests.csproj", "{1D85D006-18CC-408A-A73C-60F051FF7B7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3DC942A3-3DD1-48B4-A28E-1BC20AD9FEFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DC942A3-3DD1-48B4-A28E-1BC20AD9FEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DC942A3-3DD1-48B4-A28E-1BC20AD9FEFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D85D006-18CC-408A-A73C-60F051FF7B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D85D006-18CC-408A-A73C-60F051FF7B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D85D006-18CC-408A-A73C-60F051FF7B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D85D006-18CC-408A-A73C-60F051FF7B7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
