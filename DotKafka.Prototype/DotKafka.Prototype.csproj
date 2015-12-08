@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Cache\ICache.cs" />
+    <Compile Include="Common\Cache\LRUCache.cs" />
     <Compile Include="Common\Protocol\ApiKeys.cs" />
     <Compile Include="Common\Protocol\ApiKeysHelper.cs" />
     <Compile Include="Common\Errors\ApiException.cs" />
