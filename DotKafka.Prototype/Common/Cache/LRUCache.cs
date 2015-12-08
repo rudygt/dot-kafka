@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DotKafka.Prototype.Common.Cache {
     public class LRUCache<K, V> : ICache<K, V> {
@@ -42,8 +38,6 @@ namespace DotKafka.Prototype.Common.Cache {
                 _lruList.Remove(node);
 
                 _lruList.AddFirst(node);
-
-                _cache[key] = value;
             }
             else {
                 if (_cache.Count >= _capacity) {
@@ -55,9 +49,9 @@ namespace DotKafka.Prototype.Common.Cache {
                 }
 
                 _lruList.AddFirst(key);
-
-                _cache.Add(key, value);
             }
+
+            _cache[key] = value;
         }
 
         public bool Remove(K key) {
