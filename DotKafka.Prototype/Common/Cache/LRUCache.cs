@@ -34,16 +34,16 @@ namespace DotKafka.Prototype.Common.Cache {
         }
 
         public void Put(K key, V value) {
-            V current;
-
             LinkedListNode<K> node;
 
-            if (_cache.TryGetValue(key, out current)) {
+            if (_cache.ContainsKey(key)) {
                 node = _lruList.Find(key);
 
                 _lruList.Remove(node);
 
                 _lruList.AddFirst(node);
+
+                _cache[key] = value;
             }
             else {
                 if (_cache.Count >= _capacity) {
