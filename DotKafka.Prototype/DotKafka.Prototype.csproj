@@ -43,6 +43,8 @@
     <Compile Include="Common\Cache\ICache.cs" />
     <Compile Include="Common\Cache\LRUCache.cs" />
     <Compile Include="Common\Cache\SynchronizedCache.cs" />
+    <Compile Include="Common\Config\ConfigDef.cs" />
+    <Compile Include="Common\Config\Types\Password.cs" />
     <Compile Include="Common\Protocol\ApiKeys.cs" />
     <Compile Include="Common\Protocol\ApiKeysHelper.cs" />
     <Compile Include="Common\Errors\ApiException.cs" />
