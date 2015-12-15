@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using DotKafka.Prototype.Common.Utils;
 
 namespace DotKafka.Prototype.Common.Protocol.Types
 {
@@ -23,7 +24,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
 
         public object Read(MemoryStream buffer)
         {
-            var reader = new BinaryReader(buffer);
+            var reader = new BigEndianBinaryReader(buffer);
             int size = reader.ReadInt32();
             if (size > buffer.Remaining())
                 throw new SchemaException("Error reading array of size " + size + ", only " + buffer.Remaining() + " bytes available");
@@ -61,7 +62,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
         {
             object[] objs = (object[])item;
             int size = objs.Length;
-            var writer = new BinaryWriter(buffer);
+            var writer = new BigEndianBinaryWriter(buffer);
             writer.Write(size);
             for (int i = 0; i < size; i++)
                 Type.Write(buffer, objs[i]);

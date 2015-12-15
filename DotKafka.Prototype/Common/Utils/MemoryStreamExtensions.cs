@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DotKafka.Prototype
+namespace DotKafka.Prototype.Common.Utils
 {
     public static class MemoryStreamExtensions
     {

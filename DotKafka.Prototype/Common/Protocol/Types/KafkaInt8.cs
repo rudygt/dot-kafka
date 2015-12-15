@@ -1,3 +1,4 @@
+using DotKafka.Prototype.Common.Utils;
 using System.IO;
 
 namespace DotKafka.Prototype.Common.Protocol.Types
@@ -6,7 +7,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
     {
         public object Read(MemoryStream buffer)
         {
-            var reader = new BinaryReader(buffer);
+            var reader = new BigEndianBinaryReader(buffer);
             return reader.ReadSByte();
         }
 
@@ -32,7 +33,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
 
         public void Write(MemoryStream buffer, object item)
         {
-            var writer = new BinaryWriter(buffer);
+            var writer = new BigEndianBinaryWriter(buffer);
             writer.Write((sbyte)item);
         }
     }

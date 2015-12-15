@@ -1,7 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
-namespace DotKafka.Prototype.Common.Cache {
+namespace DotKafka.Prototype.Common.Cache
+{
     internal class SynchronizedCache<K, V> : ICache<K, V> {
 
         private readonly ICache<K, V> _underlying;
