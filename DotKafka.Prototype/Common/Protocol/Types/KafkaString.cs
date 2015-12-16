@@ -1,3 +1,4 @@
+using DotKafka.Prototype.Common.Utils;
 using System;
 using System.IO;
 using System.Text;
@@ -8,7 +9,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
     {
         public object Read(MemoryStream buffer)
         {
-            var reader = new BinaryReader(buffer);
+            var reader = new BigEndianBinaryReader(buffer);
 
             var length = reader.ReadInt16();
 
@@ -46,7 +47,7 @@ namespace DotKafka.Prototype.Common.Protocol.Types
             {
                 throw new SchemaException("String is longer than the maximum string length.");
             }
-            var writer = new BinaryWriter(buffer);
+            var writer = new BigEndianBinaryWriter(buffer);
             writer.Write((Int16)utf8Bytes.Length);
             writer.Write(utf8Bytes);
         }
