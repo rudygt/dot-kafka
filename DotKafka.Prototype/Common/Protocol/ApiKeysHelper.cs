@@ -18,7 +18,7 @@ namespace DotKafka.Prototype.Common.Protocol
         }
 
         public static ApiKeys ForId(int id)
-        {
+        {            
             return (ApiKeys)id;
         }
     }

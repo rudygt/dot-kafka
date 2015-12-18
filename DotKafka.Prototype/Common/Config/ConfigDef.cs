@@ -84,7 +84,7 @@ namespace DotKafka.Prototype.Common.Config {
 
             }
             catch (FormatException e) {
-                throw new ConfigException(name, value, "Not a number of type " + type);
+                throw new ConfigException(name, value, "Not a number of type " + type, e);
             }
 
             return new object();

@@ -82,6 +82,8 @@
     <Compile Include="Common\Errors\UnknownTopicOrPartitionException.cs" />
     <Compile Include="Common\Errors\WakeupException.cs" />
     <Compile Include="Common\Protocol\Error.cs" />
+    <Compile Include="Common\Protocol\Protocol.cs" />
+    <Compile Include="Common\Protocol\ProtoUtils.cs" />
     <Compile Include="Common\Protocol\Types\Field.cs" />
     <Compile Include="Common\Protocol\Types\IType.cs" />
     <Compile Include="Common\Protocol\Types\KafkaArrayOf.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Common\Protocol\Types\KafkaInt8.cs" />
     <Compile Include="Common\Protocol\Types\KafkaString.cs" />
     <Compile Include="Common\Protocol\Types\KafkaTypesHelper.cs" />
+    <Compile Include="Common\Requests\MetadataRequest.cs" />
     <Compile Include="Common\Serialization\ByteArrayDeserializer.cs" />
     <Compile Include="Common\Serialization\ByteArraySerializer.cs" />
     <Compile Include="Common\Serialization\IDeserializer.cs" />

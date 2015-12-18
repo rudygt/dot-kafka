@@ -2,7 +2,7 @@ using System;
 
 namespace DotKafka.Prototype.Common.Errors
 {
-    public class UnknownServerException : KafkaException
+    public class UnknownServerException : ApiException
     {
         public UnknownServerException() { }
 
