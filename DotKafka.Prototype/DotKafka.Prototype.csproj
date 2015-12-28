@@ -43,9 +43,12 @@
     <Compile Include="Common\Cache\ICache.cs" />
     <Compile Include="Common\Cache\LRUCache.cs" />
     <Compile Include="Common\Cache\SynchronizedCache.cs" />
+    <Compile Include="Common\Cluster.cs" />
     <Compile Include="Common\Config\ConfigDef.cs" />
     <Compile Include="Common\Config\ConfigException.cs" />
     <Compile Include="Common\Config\Types\Password.cs" />
+    <Compile Include="Common\Node.cs" />
+    <Compile Include="Common\PartitionInfo.cs" />
     <Compile Include="Common\Protocol\ApiKeys.cs" />
     <Compile Include="Common\Protocol\ApiKeysHelper.cs" />
     <Compile Include="Common\Errors\ApiException.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="Common\Protocol\Types\KafkaString.cs" />
     <Compile Include="Common\Protocol\Types\KafkaTypesHelper.cs" />
     <Compile Include="Common\Requests\MetadataRequest.cs" />
+    <Compile Include="Common\Requests\MetadataResponse.cs" />
     <Compile Include="Common\Serialization\ByteArrayDeserializer.cs" />
     <Compile Include="Common\Serialization\ByteArraySerializer.cs" />
     <Compile Include="Common\Serialization\IDeserializer.cs" />
@@ -105,9 +109,11 @@
     <Compile Include="Common\Serialization\LongSerializer.cs" />
     <Compile Include="Common\Serialization\StringDeserializer.cs" />
     <Compile Include="Common\Serialization\StringSerializer.cs" />
+    <Compile Include="Common\TopicPartition.cs" />
     <Compile Include="Common\Utils\BigEndianBinaryReader.cs" />
     <Compile Include="Common\Utils\BigEndianBinaryWriter.cs" />
     <Compile Include="Common\Utils\MemoryStreamExtensions.cs" />
+    <Compile Include="Common\Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\Protocol\Types\Schema.cs" />
     <Compile Include="Common\Protocol\Types\SchemaException.cs" />

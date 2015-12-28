@@ -4,9 +4,6 @@ using DotKafka.Prototype.Common.Protocol.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DotKafka.Prototype.Common.Requests
 {
@@ -80,14 +77,14 @@ namespace DotKafka.Prototype.Common.Requests
         {
             switch (ApiKeysHelper.ForId(requestId))
             {
-                case ApiKeys.Produce: return ProduceRequest.parse(buffer, versionId);
-                case ApiKeys.Fetch: return FetchRequest.parse(buffer, versionId);
-                case ApiKeys.ListOffsets: return ListOffsetRequest.parse(buffer, versionId);
-                case ApiKeys.Metadata: return MetadataRequest.parse(buffer, versionId);
-                case ApiKeys.OffsetCommit: return OffsetCommitRequest.parse(buffer, versionId);
-                case ApiKeys.OffsetFetch: return OffsetFetchRequest.parse(buffer, versionId);
-                case ApiKeys.GroupCoordinator: return GroupCoordinatorRequest.parse(buffer, versionId);
-                case ApiKeys.JoinGroup: return JoinGroupRequest.parse(buffer, versionId);
+                //case ApiKeys.Produce: return ProduceRequest.parse(buffer, versionId);
+                //case ApiKeys.Fetch: return FetchRequest.parse(buffer, versionId);
+                //case ApiKeys.ListOffsets: return ListOffsetRequest.parse(buffer, versionId);
+                case ApiKeys.Metadata: return MetadataRequest.Parse(buffer, versionId);
+                //case ApiKeys.OffsetCommit: return OffsetCommitRequest.parse(buffer, versionId);
+                //case ApiKeys.OffsetFetch: return OffsetFetchRequest.parse(buffer, versionId);
+                //case ApiKeys.GroupCoordinator: return GroupCoordinatorRequest.parse(buffer, versionId);
+                /*case ApiKeys.JoinGroup: return JoinGroupRequest.parse(buffer, versionId);
                 case ApiKeys.Heartbeat: return HeartbeatRequest.parse(buffer, versionId);
                 case ApiKeys.LeaveGroup: return LeaveGroupRequest.parse(buffer, versionId);
                 case ApiKeys.SyncGroup: return SyncGroupRequest.parse(buffer, versionId);
@@ -96,7 +93,7 @@ namespace DotKafka.Prototype.Common.Requests
                 case ApiKeys.UpdateMetadata: return UpdateMetadataRequest.parse(buffer, versionId);
                 case ApiKeys.LeaderAndIsr: return LeaderAndIsrRequest.parse(buffer, versionId);
                 case ApiKeys.DescribeGroups: return DescribeGroupsRequest.parse(buffer, versionId);
-                case ApiKeys.ListGroups: return ListGroupsRequest.parse(buffer, versionId);
+                case ApiKeys.ListGroups: return ListGroupsRequest.parse(buffer, versionId);*/
                 default:
                     return null;
             }
@@ -128,17 +125,16 @@ namespace DotKafka.Prototype.Common.Requests
                 topics.Add((string)topicObj);
             }
         }
-        
-    public override AbstractRequestResponse GetErrorResponse(int versionId, Exception e)
+
+        public override AbstractRequestResponse GetErrorResponse(int versionId, Exception e)
         {
             Dictionary<string, Error> topicErrors = new Dictionary<string, Error>();
-            /*foreach (string topic in topics)
+            foreach (string topic in topics)
             {
-                topicErrors[topic] = Error.ForException(e) ;
-            }*/
+                topicErrors[topic] = e.FromException() ;
+            }
 
-            /*Cluster cluster = new Cluster(Collections.< Node > emptyList(), Collections.< PartitionInfo > emptyList(),
-                    Collections.< String > emptySet());*/
+            Cluster cluster = new Cluster(new List<Node>(), new List<PartitionInfo>(), new HashSet<string>());
 
             switch (versionId)
             {
