@@ -111,7 +111,7 @@ namespace DotKafka.Prototype.Common.Requests
         public MetadataRequest(List<string> topics) : base(new Struct(CURRENT_SCHEMA))
         {
 
-            _struct.Set(TOPICS_KEY_NAME, topics);
+            _struct.Set(TOPICS_KEY_NAME, topics.ToArray());
             this.topics = topics;
         }
 
@@ -156,7 +156,7 @@ namespace DotKafka.Prototype.Common.Requests
             return new MetadataRequest(ProtoUtils.parseRequest((int)ApiKeys.Metadata, versionId, buffer));
         }
 
-        public static MetadataRequest parse(MemoryStream buffer)
+        public static MetadataRequest Parse(MemoryStream buffer)
         {
             return new MetadataRequest((Struct)CURRENT_SCHEMA.Read(buffer));
         }

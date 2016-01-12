@@ -116,7 +116,7 @@ namespace DotKafka.Prototype.Common.Requests
             {
                 var broker = (Struct)brokerStructs[i];
                 var nodeId = broker.GetInt(NodeIdKeyName);
-                var host = broker.Getstring(HostKeyName);
+                var host = broker.GetString(HostKeyName);
                 var port = broker.GetInt(PortKeyName);
                 brokers[nodeId] = new Node(nodeId, host, port);
             }
@@ -131,11 +131,11 @@ namespace DotKafka.Prototype.Common.Requests
 
                 var topicError = topicInfo.GetShort(TopicErrorCodeKeyName);
 
-                var topic = topicInfo.Getstring(TopicKeyName);
+                var topic = topicInfo.GetString(TopicKeyName);
 
                 if (topicError == (short)Error.None)
                 {
-                    var partitionInfos = (object[])_struct.Get(PartitionMetadataKeyName);
+                    var partitionInfos = (object[])topicInfo.Get(PartitionMetadataKeyName);
                     for (int j = 0; j < partitionInfos.Length; j++)
                     {
                         var partitionInfo = (Struct)partitionInfos[j];

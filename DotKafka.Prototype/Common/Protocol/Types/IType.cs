@@ -122,12 +122,12 @@ namespace DotKafka.Prototype.Common.Protocol.Types
             return (object[]) Get(name);
         }
 
-        public string Getstring(Field field)
+        public string GetString(Field field)
         {
             return (string) Get(field);
         }
 
-        public string Getstring(string name)
+        public string GetString(string name)
         {
             return (string) Get(name);
         }

@@ -99,6 +99,7 @@
     <Compile Include="Common\Protocol\Types\KafkaTypesHelper.cs" />
     <Compile Include="Common\Requests\MetadataRequest.cs" />
     <Compile Include="Common\Requests\MetadataResponse.cs" />
+    <Compile Include="Common\Requests\RequestHeader.cs" />
     <Compile Include="Common\Serialization\ByteArrayDeserializer.cs" />
     <Compile Include="Common\Serialization\ByteArraySerializer.cs" />
     <Compile Include="Common\Serialization\IDeserializer.cs" />
