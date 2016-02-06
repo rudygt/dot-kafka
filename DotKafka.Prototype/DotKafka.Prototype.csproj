@@ -46,6 +46,8 @@
     <Compile Include="Common\Cluster.cs" />
     <Compile Include="Common\Config\ConfigDef.cs" />
     <Compile Include="Common\Config\ConfigException.cs" />
+    <Compile Include="Common\Config\SaslConfigs.cs" />
+    <Compile Include="Common\Config\SslConfigs.cs" />
     <Compile Include="Common\Config\Types\Password.cs" />
     <Compile Include="Common\Node.cs" />
     <Compile Include="Common\PartitionInfo.cs" />

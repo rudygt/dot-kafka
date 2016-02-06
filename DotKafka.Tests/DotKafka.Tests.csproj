@@ -77,6 +77,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Common\Cache\LRUCacheTest.cs" />
+    <Compile Include="Common\Config\ConfigDefTest.cs" />
     <Compile Include="Common\Protocol\Types\ProtocolSerializationTest.cs" />
     <Compile Include="Common\Serialization\SerializationTest.cs" />
     <Compile Include="Common\Utils\BigEndianBinaryReaderTests.cs" />
