@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DotKafka.Prototype.Common.Config;
 using DotKafka.Prototype.Common.Config.Types;
 using Xunit;
@@ -35,7 +36,7 @@ namespace DotKafka.Tests.Common.Config {
             Assert.Equal(1, vals["a"]);
             Assert.Equal(2L, vals["b"]);
             Assert.Equal("hello", vals["c"]);
-            Assert.Equal(new List<string> { "a", "b", "c" }, vals["d"]);
+            Assert.Equal(new List<string> {"a", "b", "c"}, vals["d"]);
             Assert.Equal(42.5d, vals["e"]);
             //Assert.Equal(String.class, vals.get("f"));
             Assert.Equal(true, vals["g"]);
@@ -43,7 +44,47 @@ namespace DotKafka.Tests.Common.Config {
             Assert.Equal(true, vals["i"]);
             Assert.Equal(new Password("password"), vals["j"]);
             Assert.Equal(Password.Hidden, vals["j"].ToString());
-
         }
-}
+
+        [Fact]
+        public void TestInvalidDefault() {
+            try {
+                new ConfigDef().Define("a", ConfigDef.Type.Int, "hello", ConfigDef.Importance.High, "docs");
+            }
+            catch (Exception x) {
+                Assert.IsType(typeof (ConfigException), x);
+            }
+        }
+
+        [Fact]
+        public void TestNullDefault() {
+            var def = new ConfigDef().Define("a", ConfigDef.Type.Int, null, null, ConfigDef.Importance.Medium, "docs");
+            var vals = def.Parse(new Dictionary<string, object>());
+            Assert.Equal(null, vals["a"]);
+        }
+
+        [Fact]
+        public void TestMissingRequired() {
+            try {
+                new ConfigDef().Define("a", ConfigDef.Type.Int, ConfigDef.Importance.High, "docs").
+                    Parse(new Dictionary<string, object>());
+            }
+            catch (Exception x) {
+                Assert.IsType(typeof (ConfigException), x);
+                Assert.Equal("Missing required configuration \"a\" which has no default value.", x.Message);
+            }
+        }
+
+        [Fact]
+        public void TestDefinedTwice() {
+            try {
+                new ConfigDef().Define("a", ConfigDef.Type.String, ConfigDef.Importance.High, "docs").
+                    Define("a", ConfigDef.Type.Int, ConfigDef.Importance.High, "docs");
+            }
+            catch (Exception x) {
+                Assert.IsType(typeof (ConfigException), x);
+                Assert.Equal("Configuration a is defined twice.", x.Message);
+            }
+        }
+    }
 }
