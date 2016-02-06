@@ -86,5 +86,109 @@ namespace DotKafka.Tests.Common.Config {
                 Assert.Equal("Configuration a is defined twice.", x.Message);
             }
         }
+
+        [Fact]
+        public void TestBadInputs() {
+            TestBadInputs(ConfigDef.Type.Int,
+                new[] {"hello", "42.5", 42.5, long.MaxValue, Convert.ToString(long.MaxValue), new object()});
+            TestBadInputs(ConfigDef.Type.Long,
+                new[] {"hello", "42.5", Convert.ToString(long.MaxValue) + "00", new object()});
+            TestBadInputs(ConfigDef.Type.Double,
+                new[] {"hello", new object()});
+            TestBadInputs(ConfigDef.Type.String,
+                new[] {new object()});
+            TestBadInputs(ConfigDef.Type.List,
+                new[] {53, new object()});
+            TestBadInputs(ConfigDef.Type.Bool,
+                new[] {"hello", "truee", "fals"});
+        }
+
+        private void TestBadInputs(ConfigDef.Type type, IEnumerable<object> values) {
+            foreach (var value in values) {
+                var m = new Dictionary<string, object> {{"name", value}};
+                var def = new ConfigDef().Define("name", type, ConfigDef.Importance.High, "docs");
+                try {
+                    def.Parse(m);
+                    Assert.True(false, "Expected a config exception due to invalid value " + value);
+                }
+                catch (ConfigException x) {
+                    //good to go
+                }
+            }
+        }
+
+        [Fact]
+        public void TestInvalidDefaultRange() {
+            try {
+                new ConfigDef().Define("name", ConfigDef.Type.Int, -1, ConfigDef.Range.Between(0, 10),
+                    ConfigDef.Importance.High, "docs");
+            }
+            catch (Exception x) {
+                Assert.IsType(typeof (ConfigException), x);
+                Assert.Equal("Invalid value -1 for configuration name: Value must be at least 0", x.Message);
+            }
+        }
+
+        [Fact]
+        public void TestInvalidDefaultString() {
+            try {
+                new ConfigDef().Define("name", ConfigDef.Type.String, "bad",
+                    new ConfigDef.ValidString("valid", "values"), ConfigDef.Importance.High, "docs");
+            }
+            catch (Exception x) {
+                Assert.IsType(typeof (ConfigException), x);
+                Assert.Equal("Invalid value bad for configuration name: String must be one of: valid, values", x.Message);
+            }
+        }
+
+        [Fact]
+        public void TestValidators() {
+            TestValidator(ConfigDef.Type.Int, ConfigDef.Range.Between(0, 10), 5, new object[] {1, 5, 9},
+                new object[] {-1, 11});
+            TestValidator(ConfigDef.Type.String, new ConfigDef.ValidString("good", "values", "default"), "default",
+                new object[] {"good", "values", "default"}, new object[] {"bad", "inputs"});
+        }
+
+        private void TestValidator(ConfigDef.Type type, ConfigDef.IValidator validator, object defaultVal,
+            object[] okValues, object[] badValues) {
+            var def = new ConfigDef().Define("name", type, defaultVal, validator, ConfigDef.Importance.High, "docs");
+
+            foreach (var value in okValues) {
+                var m = new Dictionary<string, object> {{"name", value}};
+                def.Parse(m);
+            }
+
+            foreach (var value in badValues) {
+                var m = new Dictionary<string, object> {{"name", value}};
+                try {
+                    def.Parse(m);
+                    Assert.True(false, "Expected a config exception due to invalid value " + value);
+                }
+                catch (ConfigException x) {
+                    //good to go
+                }
+            }
+        }
+
+        [Fact]
+        public void TestSslPasswords() {
+            var def = new ConfigDef();
+            SslConfigs.AddClientSslSupport(def);
+
+            var props = new Dictionary<string, object> {
+                {SslConfigs.SslKeyPasswordConfig, "key_password"},
+                {SslConfigs.SslKeystorePasswordConfig, "keystore_password"},
+                {SslConfigs.SslTruststorePasswordConfig, "truststore_password"}
+            };
+
+            var vals = def.Parse(props);
+
+            Assert.Equal(new Password("key_password"), vals[SslConfigs.SslKeyPasswordConfig]);
+            Assert.Equal(Password.Hidden, vals[SslConfigs.SslKeyPasswordConfig].ToString());
+            Assert.Equal(new Password("keystore_password"), vals[SslConfigs.SslKeystorePasswordConfig]);
+            Assert.Equal(Password.Hidden, vals[SslConfigs.SslKeystorePasswordConfig].ToString());
+            Assert.Equal(new Password("truststore_password"), vals[SslConfigs.SslTruststorePasswordConfig]);
+            Assert.Equal(Password.Hidden, vals[SslConfigs.SslTruststorePasswordConfig].ToString());
+        }
     }
 }

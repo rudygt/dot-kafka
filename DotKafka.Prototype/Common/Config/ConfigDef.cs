@@ -97,30 +97,34 @@ namespace DotKafka.Prototype.Common.Config {
                         throw new ConfigException(name, value,
                             "Expected value to be a string, but it was a " + value.GetType().Name);
                     case Type.Int:
+                        int intResult;
                         if (value is int)
                             return (int) value;
-                        if (value is string)
-                            return int.Parse(trimmed);
+                        if (value is string && int.TryParse(trimmed, out intResult))
+                            return intResult;
                         throw new ConfigException(name, value, "Expected value to be an number.");
                     case Type.Short:
+                        short shortResult;
                         if (value is short)
                             return (short) value;
-                        if (value is string)
-                            return short.Parse(trimmed);
+                        if (value is string && short.TryParse(trimmed, out shortResult))
+                            return shortResult;
                         throw new ConfigException(name, value, "Expected value to be an number.");
                     case Type.Long:
+                        long longResult;
                         if (value is int)
                             return (long) ((int) value);
                         if (value is long)
                             return (long) value;
-                        if (value is string)
-                            return long.Parse(trimmed);
+                        if (value is string && long.TryParse(trimmed, out longResult))
+                            return longResult;
                         throw new ConfigException(name, value, "Expected value to be an number.");
                     case Type.Double:
+                        double doubleResult;
                         if (value is double)
                             return (double) value;
-                        if (value is string)
-                            return double.Parse(trimmed);
+                        if (value is string && double.TryParse(trimmed, out doubleResult))
+                            return doubleResult;
                         throw new ConfigException(name, value, "Expected value to be an number.");
                     case Type.List:
                         if (value is IList)
